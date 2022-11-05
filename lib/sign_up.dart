@@ -123,6 +123,9 @@ class SignUpWidgets extends State<SignupWidget> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColour.getPrimarySwatch()),
+                      minWidth: 200,
+                      height: 100,
+                      padding: Edgeinserts.all(16),
                   child: const Text('Back'),
                   onPressed: () {
                     Navigator.push(
