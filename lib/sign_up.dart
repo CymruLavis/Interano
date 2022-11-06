@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test/login.dart';
 import 'colourSwatch.dart';
+import 'package:test/account_validation.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -37,11 +38,24 @@ class SignUpWidgets extends State<SignupWidget> {
   TextEditingController passwordValidate = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController dob = TextEditingController();
+  bool cbTandC = false;
+  bool cbNotifications = false;
 
   final primaryColour = Colours();
 
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return primaryColour.getPrimarySwatch();
+    }
     return Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
@@ -120,12 +134,42 @@ class SignUpWidgets extends State<SignupWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                const Text('Agree to terms and conditions'),
+                Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  value: cbTandC,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      cbTandC = value!;
+                    });
+                  },
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text('Agree to notifications'),
+                Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  value: cbNotifications,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      cbNotifications = value!;
+                    });
+                  },
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,               
+              children: <Widget>[
                 ElevatedButton(
+                  
                   style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColour.getPrimarySwatch()),
-                      minWidth: 200,
-                      height: 100,
-                      padding: Edgeinserts.all(16),
                   child: const Text('Back'),
                   onPressed: () {
                     Navigator.push(
@@ -135,16 +179,35 @@ class SignUpWidgets extends State<SignupWidget> {
                     );
                   },
                 ),
+                SizedBox(
+                  width: 50
+                ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColour.getPrimarySwatch()),
                   child: const Text('Create Account'),
                   onPressed: () {
-                    //print(firstName.text);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AccountValidation()),
+                    );
                   },
-                )
+                ),
               ],
             ),
+            Container(
+              alignment: Alignment.center,
+                padding: const EdgeInsets.all(10),
+                child: const Text(
+                  'fix size of buttons and Add a captcha here',
+                  style: TextStyle(
+                      color: Color.fromRGBO(75, 113, 210, 1),
+                      //It would be great to get this color working with the function
+                      fontWeight: FontWeight.w500,
+                      fontSize: 30),
+                )
+              ),
           ],
         ));
   }
