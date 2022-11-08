@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test/login.dart';
-import 'colourSwatch.dart';
+import 'models/colourSwatch.dart';
 import 'package:test/account_validation.dart';
 
 class SignUpPage extends StatelessWidget {

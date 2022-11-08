@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'colourSwatch.dart';
+import 'models/colourSwatch.dart';
 import 'package:test/sign_up.dart';
 import 'package:test/map_page.dart';
+import 'package:test/login.dart';
 
 
 class AccountValidation extends StatelessWidget {
@@ -74,11 +75,11 @@ class ValidationWidgets extends State<ValidationWidget> {
                         ),
                         child: const Text('Ok'),
                         onPressed: () {
-                            // Navigator.push(
-                            // context,
-                            // MaterialPageRoute(
-                            //     builder: (context) => const MapView()),
-                            // );
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                            );
                         },
                     ),
                 ),

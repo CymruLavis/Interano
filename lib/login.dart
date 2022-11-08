@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test/sign_up.dart';
-import 'colourSwatch.dart';
+import 'models/colourSwatch.dart';
 
 void main() {
   runApp(const LoginPage());
