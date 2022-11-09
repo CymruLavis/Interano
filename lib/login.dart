@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:test/sign_up.dart';
 import 'models/colourSwatch.dart';
 
-void main() {
-  runApp(const LoginPage());
-}
-
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
   static const String _title = 'Ronnect Login';

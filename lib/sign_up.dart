@@ -56,6 +56,7 @@ class SignUpWidgets extends State<SignupWidget> {
       }
       return primaryColour.getPrimarySwatch();
     }
+
     return Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
@@ -94,6 +95,7 @@ class SignUpWidgets extends State<SignupWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
+                //change to date picker
                 controller: dob,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -164,10 +166,9 @@ class SignUpWidgets extends State<SignupWidget> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,               
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                  
                   style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColour.getPrimarySwatch()),
                   child: const Text('Back'),
@@ -179,9 +180,7 @@ class SignUpWidgets extends State<SignupWidget> {
                     );
                   },
                 ),
-                SizedBox(
-                  width: 50
-                ),
+                SizedBox(width: 50),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColour.getPrimarySwatch()),
@@ -197,7 +196,7 @@ class SignUpWidgets extends State<SignupWidget> {
               ],
             ),
             Container(
-              alignment: Alignment.center,
+                alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
                   'fix size of buttons and Add a captcha here',
@@ -206,8 +205,7 @@ class SignUpWidgets extends State<SignupWidget> {
                       //It would be great to get this color working with the function
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
-                )
-              ),
+                )),
           ],
         ));
   }
