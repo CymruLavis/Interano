@@ -15,7 +15,7 @@ class SignUpPage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text(pageName),
-          backgroundColor: const Color.fromRGBO(75, 113, 210, 1),
+          backgroundColor: Colours().getAppBarColor(),
         ),
         body: const SignupWidget(),
       ),
@@ -92,17 +92,9 @@ class SignUpWidgets extends State<SignupWidget> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                //change to date picker
-                controller: dob,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Date of Birth',
+            Container(//date picker
+
                 ),
-              ),
-            ),
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
@@ -168,30 +160,34 @@ class SignUpWidgets extends State<SignupWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColour.getPrimarySwatch()),
-                  child: const Text('Back'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()),
-                    );
-                  },
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColour.getPrimarySwatch()),
+                    child: const Text('Back'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
+                      );
+                    },
+                  ),
                 ),
-                SizedBox(width: 50),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColour.getPrimarySwatch()),
-                  child: const Text('Create Account'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AccountValidation()),
-                    );
-                  },
+                const SizedBox(width: 30),
+                Expanded(
+                  child: ElevatedButton(
+                    child: const Text("Create Account"),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColour.getPrimarySwatch()),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AccountValidation()),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

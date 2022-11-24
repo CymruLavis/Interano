@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Maps Sample App'),
-          backgroundColor: const Color.fromRGBO(75, 113, 210, 1),
+          backgroundColor: Colours().getAppBarColor(),
           actions: [
             PopupMenuButton(
                 // add icon, by default "3 dot" icon

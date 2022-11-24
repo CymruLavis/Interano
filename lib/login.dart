@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:test/map_page.dart';
 import 'package:test/sign_up.dart';
 import 'models/colourSwatch.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
-  static const String _title = 'Ronnect Login';
+  static const String _title = 'Login';
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class LoginPage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text(_title),
-          backgroundColor: const Color.fromRGBO(75, 113, 210, 1),
+          backgroundColor: Colours().getAppBarColor(),
         ),
         body: const MyStatefulWidget(),
       ),
@@ -57,18 +58,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'Ronnect Login',
-                  style: TextStyle(
-                      color: Color.fromRGBO(75, 113, 210, 1),
-                      //It would be great to get this color working with the function
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30),
-                )),
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: Image.asset('images/Logo.jpg', height: 200, width: 200)),
+                child: Image.asset('images/Logo.jpg', height: 100)),
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
@@ -107,7 +97,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColour.getPrimarySwatch()),
                   child: const Text('Login'),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MyApp()),
+                    );
+                  },
                 )),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

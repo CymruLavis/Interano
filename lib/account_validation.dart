@@ -4,7 +4,7 @@ import 'package:test/login.dart';
 
 class AccountValidation extends StatelessWidget {
   const AccountValidation({Key? key}) : super(key: key);
-  static const String pageName = 'Validation';
+  static const String pageName = 'Account Validation';
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class AccountValidation extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text(pageName),
-          backgroundColor: const Color.fromRGBO(75, 113, 210, 1),
+          backgroundColor: Colours().getAppBarColor(),
         ),
         body: const ValidationWidget(),
       ),
@@ -42,13 +42,13 @@ class ValidationWidgets extends State<ValidationWidget> {
           Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
-              child: const Text(
-                'Validate your email',
+              child: Text(
+                'Enter the code that was sent to your email and press ok.',
                 style: TextStyle(
-                    color: Color.fromRGBO(75, 113, 210, 1),
+                    color: primaryColour.getPrimarySwatch(),
                     //It would be great to get this color working with the function
                     fontWeight: FontWeight.w500,
-                    fontSize: 30),
+                    fontSize: 15),
               )),
           Container(
             alignment: Alignment.center,
