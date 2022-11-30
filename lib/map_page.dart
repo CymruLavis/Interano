@@ -40,27 +40,35 @@ class _MyAppState extends State<MyApp> {
             PopupMenuButton<MenuItem>(
                 onSelected: (value) {
                   if (value == MenuItem.filter) {
-                    print("Filter page");
-                    // With the navigator option, the button is not being recognized as a button
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //   builder: (context) => const FiltersPage(),
-                    // ));
+                    // print("Filter page");
+                    //Error: Navigator operation requested with a context that does not include a Navigator.
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FiltersPage()),
+                    );
                   } else if (value == MenuItem.settings) {
                   } else if (value == MenuItem.logout) {}
                 },
                 itemBuilder: (context) => [
                       PopupMenuItem(
-                        child: Text("Filter"),
-                        value: MenuItem.filter,
-                      ),
+                          value: MenuItem.filter,
+                          child: ListTile(
+                            leading: Icon(Icons.filter),
+                            title: Text("Filters"),
+                          )),
                       PopupMenuItem(
-                        child: Text("Settings"),
-                        value: MenuItem.settings,
-                      ),
+                          value: MenuItem.settings,
+                          child: ListTile(
+                            leading: Icon(Icons.settings),
+                            title: Text("Settings"),
+                          )),
                       PopupMenuItem(
-                        child: Text("Logout"),
-                        value: MenuItem.logout,
-                      ),
+                          value: MenuItem.logout,
+                          child: ListTile(
+                            leading: Icon(Icons.logout),
+                            title: Text("Logout"),
+                          )),
                     ])
           ],
         ),

@@ -14,7 +14,7 @@ class FiltersPage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text(pageName),
-          backgroundColor: const Color.fromRGBO(75, 113, 210, 1),
+          backgroundColor: Colours().getAppBarColor(),
         ),
         body:
             const FiltersWidget(), //Might need to change to custom scroll view depending on how many filters we come up with
@@ -33,54 +33,72 @@ class FiltersWidget extends StatefulWidget {
 class FiltersWidgets extends State<FiltersWidget> {
   final primaryColour = Colours();
   double rangeValue = 5;
+  String dropDown = "Restaurant";
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         child: ListView(
           children: <Widget>[
             Row(
               children: <Widget>[
-                const Text('Store Type: '),
-                //Dropdown
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                const Text('Item Type:'),
-                //Input box
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                const Text('Price Min (\$): '),
-                // Input box
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                const Text('Price Max (\$): '),
-                //Input box
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                const Text('Range (Km):'),
-                Slider(
-                  value: rangeValue,
-                  max: 50,
-                  min: 1,
-                  divisions: 50,
-                  label: rangeValue.toString(),
-                  onChanged: (double value) {
-                    setState(() {
-                      rangeValue = value;
-                    });
-                  },
+                Expanded(flex: 3, child: const Text('Category: ')),
+                Expanded(
+                  flex: 6,
+                  child: DropdownButtonFormField(
+                    value: dropDown,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2),
+                    )),
+                    // isExpanded: true,
+                    items: [
+                      DropdownMenuItem(
+                          child: Text("Restaurant"), value: "Restaurant"),
+                      DropdownMenuItem(
+                        child: Text("Retail"),
+                        value: "Retail",
+                      ),
+                      DropdownMenuItem(
+                        child: Text("Entertainment"),
+                        value: "Entertainment",
+                      )
+                    ],
+                    onChanged: (value) {
+                      if (value is String) {
+                        setState(() {
+                          dropDown = value;
+                        });
+                      }
+                    },
+                  ),
                 )
               ],
             ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 3,
+                  child: const Text('Range (Km):'),
+                ),
+                Expanded(
+                    flex: 6,
+                    child: Slider(
+                      value: rangeValue,
+                      max: 50,
+                      min: 1,
+                      divisions: 50,
+                      label: rangeValue.toString(),
+                      onChanged: (double value) {
+                        setState(() {
+                          rangeValue = value;
+                        });
+                      },
+                    ))
+              ],
+            ),
+            //item type, price min, price max
           ],
         ));
   }
