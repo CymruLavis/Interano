@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:test/login.dart';
 import 'filters.dart';
 import 'models/colourSwatch.dart';
 
@@ -38,17 +39,22 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Colours().getAppBarColor(),
           actions: [
             PopupMenuButton<MenuItem>(
+                icon: Icon(Icons.menu),
                 onSelected: (value) {
                   if (value == MenuItem.filter) {
-                    // print("Filter page");
-                    //Error: Navigator operation requested with a context that does not include a Navigator.
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const FiltersPage()),
                     );
                   } else if (value == MenuItem.settings) {
-                  } else if (value == MenuItem.logout) {}
+                  } else if (value == MenuItem.logout) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  }
                 },
                 itemBuilder: (context) => [
                       PopupMenuItem(

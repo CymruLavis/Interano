@@ -161,9 +161,11 @@ class SignUpWidgets extends State<SignupWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
+                  flex: 3,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColour.getPrimarySwatch()),
+                        backgroundColor: primaryColour.getPrimarySwatch(),
+                        minimumSize: Size(0, 40)),
                     child: const Text('Back'),
                     onPressed: () {
                       Navigator.push(
@@ -174,12 +176,14 @@ class SignUpWidgets extends State<SignupWidget> {
                     },
                   ),
                 ),
-                const SizedBox(width: 30),
+                const SizedBox(width: 20),
                 Expanded(
+                  flex: 3,
                   child: ElevatedButton(
                     child: const Text("Create Account"),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColour.getPrimarySwatch()),
+                        backgroundColor: primaryColour.getPrimarySwatch(),
+                        minimumSize: Size(0, 40)),
                     onPressed: () {
                       Navigator.push(
                         context,
