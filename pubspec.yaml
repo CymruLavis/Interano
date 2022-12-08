@@ -38,6 +38,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_maps_flutter: ^2.2.1
   google_maps_flutter_web: ^0.4.0
+  intl_phone_number_input: ^0.7.1
+  country_picker: ^2.0.18
+  intl: ^0.16.1
+
+
 
 dev_dependencies:
   flutter_test:

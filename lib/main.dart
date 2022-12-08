@@ -6,7 +6,7 @@ import 'package:test/sign_up.dart';
 import 'app.dart';
 
 void main() {
-  runApp(FiltersPage());
+  runApp(SignUpPage());
   // there will need to be a check if remember me is checkd then it
   // will either run map page or login page
 }

@@ -90,7 +90,7 @@ class FiltersWidgets extends State<FiltersWidget> {
                       value: rangeValue,
                       max: 50,
                       min: 1,
-                      divisions: 50,
+                      divisions: 49,
                       label: rangeValue.toString(),
                       onChanged: (double value) {
                         setState(() {
