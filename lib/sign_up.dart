@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:test/login.dart';
 import 'models/colourSwatch.dart';
 import 'package:test/account_validation.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+// import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:intl/intl.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -33,21 +37,26 @@ class SignupWidget extends StatefulWidget {
 }
 
 class SignUpWidgets extends State<SignupWidget> {
-  TextEditingController firstName = TextEditingController();
-  TextEditingController lastName = TextEditingController();
-  TextEditingController userName = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController passwordValidate = TextEditingController();
-  TextEditingController email = TextEditingController();
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
+  // TextEditingController userName = TextEditingController();
+  final password = TextEditingController();
+  final passwordValidate = TextEditingController();
+  final email = TextEditingController();
+  var phoneNum = TextEditingController();
+  final primaryColour = Colours();
+
+  // PhoneNumber number = PhoneNumber();
   DateTime dob = DateTime.now();
+
   bool cbTandC = false;
   bool cbNotifications = false;
-  PhoneNumber number = PhoneNumber(isoCode: 'CAN');
-  final TextEditingController phoneNum = TextEditingController();
-  String initialCountry = 'CAN';
+  bool isVisible = false;
+
   int flex1 = 3;
   int flex2 = 6;
-  final primaryColour = Colours();
+  String message = "Fill in all fields";
+  String initialCountry = 'CAN';
 
   @override
   Widget build(BuildContext context) {
@@ -121,63 +130,130 @@ class SignUpWidgets extends State<SignupWidget> {
                         border: OutlineInputBorder(),
                         labelText: 'Email',
                       ),
+                      onChanged: (value) {
+                        if (emailValidation(email.text) == false) {
+                          setState(() {
+                            message = "Invalid email";
+                            isVisible = true;
+                          });
+                        } else {
+                          setState(() {
+                            isVisible = false;
+                          });
+                        }
+                      },
                     ))
               ]),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: InternationalPhoneNumberInput(
-                // ignoreBlank: false,
-                // autoValidateMode: AutovalidateMode.disabled,
-                // selectorTextStyle: TextStyle(color: Colors.black),
-                initialValue: PhoneNumber(isoCode: 'CAN'), // number
-                // textFieldController: phoneNum,
-                // formatInput: false,
-                // keyboardType: TextInputType.numberWithOptions(
-                //     signed: true, decimal: true),
-                // inputBorder: OutlineInputBorder(),
-                onInputChanged: (PhoneNumber number) {
-                  print(number.phoneNumber);
-                },
-                // onInputValidated: (bool value) {
-                //   print(value);
-                // },
-                selectorConfig: SelectorConfig(
-                  selectorType: PhoneInputSelectorType.DROPDOWN,
-                ),
-                // onSaved: (PhoneNumber number) {
-                //   print('On Saved: $number');
-                // },
-              ),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
               child: Row(children: <Widget>[
                 Expanded(
                   flex: flex1,
-                  child: ElevatedButton(
-                      child: const Text("Date of Birth"),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColour.getPrimarySwatch(),
-                          minimumSize: Size(0, 40)),
-                      onPressed: () {
-                        showDatePicker(
-                                context: context,
-                                initialDate: dob,
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100))
-                            .then((value) {
-                          setState(() {
-                            dob = value!;
-                          });
-                        });
-
-                        // setState(() {
-                        //   dob = DateTime.now();
-                        // });
-                      } //_selectDate(context),
-                      ),
+                  child: const Text('Phone Number'),
                 ),
+                Expanded(
+                    flex: flex2,
+                    child: TextField(
+                      controller: phoneNum,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Phone Number',
+                      ),
+                      onChanged: (value) {
+                        if (double.tryParse(phoneNum.text) == null) {
+                          setState(() {
+                            message = "Invalid phone number";
+                            isVisible = true;
+                          });
+                        } else {
+                          if (phoneNumberValidation(phoneNum.text) == false) {
+                            setState(() {
+                              message = "Invalid phone number length";
+                              isVisible = true;
+                            });
+                          } else {
+                            setState(() {
+                              isVisible = false;
+                            });
+                          }
+                        }
+                      },
+                    ))
+              ]),
+            ),
+
+            // Container(
+            //   padding: const EdgeInsets.all(5),
+            //   child: InternationalPhoneNumberInput(
+            //     inputBorder: OutlineInputBorder(),
+            //     onInputChanged: (PhoneNumber number) {},
+            //     onSaved: ((value) {
+            //       phoneNumberValidation(number.phoneNumber as int);
+            //     }),
+            //     // onInputValidated: (bool value) {
+            //     //   setState(() {
+            //     //     phoneNum = number.phoneNumber as TextEditingController;
+            //     //   });
+            //     // },
+            //     selectorConfig: SelectorConfig(
+            //       selectorType: PhoneInputSelectorType.DROPDOWN,
+            //     ),
+            //   ),
+            // ),
+
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: Row(children: <Widget>[
+                Expanded(
+                  flex: flex1,
+                  child: const Text('Date of Birth'),
+                ),
+                IconButton(
+                    icon: const Icon(Icons.calendar_month),
+                    onPressed: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: dob,
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2100),
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: ColorScheme.light(
+                                primary: Colours()
+                                    .getPrimarySwatch(), // <-- SEE HERE
+                                // onPrimary: Colors.redAccent, // <-- SEE HERE
+                                onSurface: Colours()
+                                    .getPrimarySwatch(), // <-- SEE HERE
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  foregroundColor:
+                                      Colors.red, // button text color
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
+                      ).then((value) {
+                        setState(() {
+                          dob = value!;
+                        });
+                        if (ageValidation(dob) == false) {
+                          setState(() {
+                            message =
+                                "You are too young to use this application";
+                            isVisible = true;
+                          });
+                        } else {
+                          setState(() {
+                            isVisible = false;
+                          });
+                        }
+                      });
+                    }),
                 Expanded(
                   flex: flex2,
                   child: Text(DateFormat('yyyy-MM-dd')
@@ -186,25 +262,25 @@ class SignUpWidgets extends State<SignupWidget> {
                 ),
               ]),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Row(children: <Widget>[
-                Expanded(
-                  flex: flex1,
-                  child: const Text('Username'),
-                ),
-                Expanded(
-                  flex: flex2,
-                  child: TextField(
-                    controller: userName,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Username',
-                    ),
-                  ),
-                )
-              ]),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+            //   child: Row(children: <Widget>[
+            //     Expanded(
+            //       flex: flex1,
+            //       child: const Text('Username'),
+            //     ),
+            //     Expanded(
+            //       flex: flex2,
+            //       child: TextField(
+            //         controller: userName,
+            //         decoration: const InputDecoration(
+            //           border: OutlineInputBorder(),
+            //           labelText: 'Username',
+            //         ),
+            //       ),
+            //     )
+            //   ]),
+            // ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
               child: Row(children: <Widget>[
@@ -216,10 +292,24 @@ class SignUpWidgets extends State<SignupWidget> {
                   flex: flex2,
                   child: TextField(
                     controller: password,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password',
                     ),
+                    onChanged: (value) {
+                      if (passwordValidation(password.text) == false) {
+                        setState(() {
+                          message =
+                              "Password does not meet security requirements. \nPlease include uppercase, lowercase, \nspecial characters, and numbers.";
+                          isVisible = true;
+                        });
+                      } else {
+                        setState(() {
+                          isVisible = false;
+                        });
+                      }
+                    },
                   ),
                 )
               ]),
@@ -235,20 +325,80 @@ class SignUpWidgets extends State<SignupWidget> {
                   flex: flex2,
                   child: TextField(
                     controller: passwordValidate,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Confirm Password',
                     ),
+                    onChanged: (value) {
+                      if (password.text != passwordValidate.text) {
+                        setState(() {
+                          message = "Entered passwords do not match";
+                          isVisible = true;
+                        });
+                      } else {
+                        isVisible = false;
+                      }
+                    },
                   ),
                 )
               ]),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Visibility(
+                    child: Text(
+                      message,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.red, fontStyle: FontStyle.italic),
+                    ),
+                    visible: isVisible,
+                  )
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Agree to terms and conditions'),
+                  RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                      text: 'Agree to ',
+                      style: new TextStyle(color: Colors.black),
+                    ),
+                    TextSpan(
+                        text: "terms and conditions",
+                        style: TextStyle(color: Colors.blue),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            Uri url =
+                                Uri(scheme: "https", host: "www.youtube.com");
+                            if (!await launchUrl(url,
+                                mode: LaunchMode.externalApplication)) {
+                              throw showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: Text("Launch Error"),
+                                        content: Text(
+                                            "Error accessing terms and conditions"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("Ok"))
+                                        ],
+                                      )); //pop up menu
+                            }
+                          })
+                  ])),
                   Checkbox(
                     checkColor: Colors.white,
                     fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -310,20 +460,84 @@ class SignUpWidgets extends State<SignupWidget> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: primaryColour.getPrimarySwatch(),
                           minimumSize: Size(0, 40)),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AccountValidation()),
-                        );
-                        //Send random code to phone number
-                      },
+                      onPressed: (cbTandC && cbNotifications)
+                          ? () {
+                              if (textValidations(
+                                      firstName.text,
+                                      lastName.text,
+                                      email.text,
+                                      password.text,
+                                      passwordValidate.text) ==
+                                  false) {
+                                setState(() {
+                                  message = "Not all fields are completed";
+                                  isVisible = true;
+                                });
+                              } else {
+                                //Send random code to phone number
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AccountValidation()),
+                                );
+                              }
+                            }
+                          : null,
                     ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ));
   }
+}
+
+bool ageValidation(DateTime date) {
+  bool flag = false;
+  final now = DateTime.now();
+  final dt2 = DateTime(now.year - 15, now.month, now.day);
+  if (date.compareTo(dt2) < 0) {
+    flag = true;
+  }
+  return flag;
+}
+
+bool passwordValidation(String password) {
+  RegExp regex =
+      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+
+  if (!regex.hasMatch(password)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool emailValidation(String email) {
+  final bool flag = EmailValidator.validate(email);
+  return flag;
+}
+
+bool phoneNumberValidation(String num) {
+  bool flag = false;
+  if (num.length == 10) {
+    flag = true;
+  }
+  print(num);
+  return flag;
+}
+
+bool textValidations(
+    String fName, String lName, String email, String pass, String passVal) {
+  bool flag = false;
+  if (fName.isNotEmpty ||
+      lName.isNotEmpty ||
+      email.isNotEmpty ||
+      pass.isNotEmpty ||
+      passVal.isNotEmpty) {
+    flag = true;
+  }
+  return flag;
 }

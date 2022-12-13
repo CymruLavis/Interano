@@ -41,6 +41,8 @@ dependencies:
   intl_phone_number_input: ^0.7.1
   country_picker: ^2.0.18
   intl: ^0.16.1
+  email_validator: ^2.1.17
+  url_launcher: ^6.1.7
 
 
 
