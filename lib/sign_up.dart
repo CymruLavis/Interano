@@ -77,7 +77,7 @@ class SignUpWidgets extends State<SignupWidget> {
         child: ListView(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -97,7 +97,7 @@ class SignUpWidgets extends State<SignupWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Row(children: <Widget>[
                 Expanded(
                   flex: flex1,
@@ -116,7 +116,7 @@ class SignUpWidgets extends State<SignupWidget> {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Row(children: <Widget>[
                 Expanded(
                   flex: flex1,
@@ -146,7 +146,7 @@ class SignUpWidgets extends State<SignupWidget> {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Row(children: <Widget>[
                 Expanded(
                   flex: flex1,
@@ -203,7 +203,7 @@ class SignUpWidgets extends State<SignupWidget> {
             // ),
 
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Row(children: <Widget>[
                 Expanded(
                   flex: flex1,
@@ -282,7 +282,7 @@ class SignUpWidgets extends State<SignupWidget> {
             //   ]),
             // ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Row(children: <Widget>[
                 Expanded(
                   flex: flex1,
@@ -315,7 +315,7 @@ class SignUpWidgets extends State<SignupWidget> {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Row(children: <Widget>[
                 Expanded(
                   flex: flex1,
@@ -375,7 +375,7 @@ class SignUpWidgets extends State<SignupWidget> {
                     ),
                     TextSpan(
                         text: "terms and conditions",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Colours().getTextButtonColor()),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
                             Uri url =

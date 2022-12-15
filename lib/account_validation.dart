@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'models/colourSwatch.dart';
 import 'package:test/login.dart';
 
 class AccountValidation extends StatelessWidget {
   const AccountValidation({Key? key}) : super(key: key);
-  static const String pageName = 'Account Validation';
+  static const String pageName = 'Verification Code';
 
   @override
   Widget build(BuildContext context) {
@@ -36,46 +37,204 @@ class ValidationWidgets extends State<ValidationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(children: <Widget>[
-          Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                'Enter the code that was sent to your email and press ok.',
-                style: TextStyle(
-                    color: primaryColour.getPrimarySwatch(),
-                    //It would be great to get this color working with the function
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15),
-              )),
-          Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(10),
-            child: TextField(
-              controller: validationInput,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: '',
+    return ListView(children: <Widget>[
+      Padding(
+        padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+        child: Text("Verification code has been sent to "),
+      ),
+      Padding(
+        padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+        child: Text("redacted phone number"),
+      ),
+      Padding(
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 5, 0),
+                child: SizedBox(
+                  height: 50,
+                  width: 46,
+                  child: TextFormField(
+                    onChanged: ((value) {
+                      if (value.length == 1) {
+                        FocusScope.of(context).nextFocus();
+                      }
+                    }),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    style: Theme.of(context).textTheme.headline6,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(1),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: 50,
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryColour.getPrimarySwatch()),
-              child: const Text('Ok'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              },
-            ),
-          ),
-        ]));
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 5, 0),
+                child: SizedBox(
+                  height: 50,
+                  width: 46,
+                  child: TextFormField(
+                    onChanged: ((value) {
+                      if (value.length == 1) {
+                        FocusScope.of(context).nextFocus();
+                      }
+                    }),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    style: Theme.of(context).textTheme.headline6,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(1),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 5, 0),
+                child: SizedBox(
+                  height: 50,
+                  width: 46,
+                  child: TextFormField(
+                    onChanged: ((value) {
+                      if (value.length == 1) {
+                        FocusScope.of(context).nextFocus();
+                      }
+                    }),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    style: Theme.of(context).textTheme.headline6,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(1),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 5, 0),
+                child: SizedBox(
+                  height: 50,
+                  width: 46,
+                  child: TextFormField(
+                    onChanged: ((value) {
+                      if (value.length == 1) {
+                        FocusScope.of(context).nextFocus();
+                      }
+                    }),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    style: Theme.of(context).textTheme.headline6,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(1),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 5, 0),
+                child: SizedBox(
+                  height: 50,
+                  width: 46,
+                  child: TextFormField(
+                    onChanged: ((value) {
+                      if (value.length == 1) {
+                        FocusScope.of(context).nextFocus();
+                      }
+                    }),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    style: Theme.of(context).textTheme.headline6,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(1),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 5, 0),
+                child: SizedBox(
+                  height: 50,
+                  width: 46,
+                  child: TextFormField(
+                    onChanged: ((value) {
+                      if (value.length == 1) {
+                        FocusScope.of(context).nextFocus();
+                      }
+                    }),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    style: Theme.of(context).textTheme.headline6,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(1),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )),
+      Padding(
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Code will expire in 5 minutes")])),
+      Padding(
+          padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 3,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColour.getPrimarySwatch(),
+                      minimumSize: Size(0, 40)),
+                  child: const Text('Resend Code'),
+                  onPressed: () {
+                    //api to resend code and reset time sent
+                  },
+                ),
+              ),
+              SizedBox(width: 20),
+              Expanded(
+                flex: 3,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColour.getPrimarySwatch(),
+                      minimumSize: Size(0, 40)),
+                  child: const Text('Ok'),
+                  onPressed: () {
+                    //api to check code
+                    // check time with just datetime.now - 5 minutes
+                  },
+                ),
+              )
+            ],
+          ))
+    ]);
   }
 }

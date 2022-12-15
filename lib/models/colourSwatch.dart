@@ -13,4 +13,8 @@ class Colours {
   Color getAppBarColor() {
     return Color.fromRGBO(229, 19, 74, 1);
   }
+
+  Color getTextButtonColor() {
+    return Colors.blue;
+  }
 }

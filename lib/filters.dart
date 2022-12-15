@@ -34,9 +34,11 @@ class FiltersWidgets extends State<FiltersWidget> {
   final primaryColour = Colours();
   double rangeValue = 5;
   String dropDown = "Restaurant";
-  TextEditingController priceLow = TextEditingController();
-  TextEditingController priceHigh = TextEditingController();
-  TextEditingController keyWords = TextEditingController();
+  final priceLow = TextEditingController();
+  final priceHigh = TextEditingController();
+  final keyWords = TextEditingController();
+  String message = "";
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class FiltersWidgets extends State<FiltersWidget> {
                       label: rangeValue.toString(),
                       onChanged: (double value) {
                         setState(() {
-                          rangeValue = value;
+                          rangeValue = value.roundToDouble();
                         });
                       },
                     ))
@@ -107,12 +109,24 @@ class FiltersWidgets extends State<FiltersWidget> {
                 Expanded(
                   flex: 6,
                   child: TextField(
-                    controller: priceLow,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Price Min (\$)',
-                    ),
-                  ),
+                      controller: priceLow,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Price Min (\$)',
+                      ),
+                      onChanged: (value) {
+                        if (double.tryParse(priceLow.text) == null &&
+                            priceLow.text.isNotEmpty) {
+                          setState(() {
+                            message = "Invalid price";
+                            isVisible = true;
+                          });
+                        } else {
+                          setState(() {
+                            isVisible = false;
+                          });
+                        }
+                      }),
                 )
               ]),
             ),
@@ -123,12 +137,24 @@ class FiltersWidgets extends State<FiltersWidget> {
                 Expanded(
                   flex: 6,
                   child: TextField(
-                    controller: priceHigh,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Price Max (\$)',
-                    ),
-                  ),
+                      controller: priceHigh,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Price Max (\$)',
+                      ),
+                      onChanged: (value) {
+                        if (double.tryParse(priceHigh.text) == null &&
+                            priceHigh.text.isNotEmpty) {
+                          setState(() {
+                            message = "Invalid price";
+                            isVisible = true;
+                          });
+                        } else {
+                          setState(() {
+                            isVisible = false;
+                          });
+                        }
+                      }),
                 )
               ]),
             ),
@@ -142,11 +168,29 @@ class FiltersWidgets extends State<FiltersWidget> {
                     controller: keyWords,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Key words',
+                      labelText: 'eg. shorts, shirts',
                     ),
                   ),
                 )
               ]),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Visibility(
+                    child: Text(
+                      message,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.red, fontStyle: FontStyle.italic),
+                    ),
+                    visible: isVisible,
+                  )
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 0),

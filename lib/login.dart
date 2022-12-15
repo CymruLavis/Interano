@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test/forgotPassword.dart';
 import 'package:test/map_page.dart';
 import 'package:test/sign_up.dart';
 import 'models/colourSwatch.dart';
@@ -35,7 +36,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController password = TextEditingController();
   bool remberMe = false;
   bool isChecked = false;
-  final primaryColour = Colours();
+  bool isVisible = false;
+  String message = "";
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       if (states.any(interactiveStates.contains)) {
         return Colors.blue;
       }
-      return primaryColour.getPrimarySwatch();
+      return Colours().getPrimarySwatch();
     }
 
     return Padding(
@@ -80,12 +82,32 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Visibility(
+                    child: Text(
+                      message,
+                      style: TextStyle(
+                          color: Colors.red, fontStyle: FontStyle.italic),
+                    ),
+                    visible: isVisible,
+                  )
+                ],
+              ),
+            ),
             TextButton(
               onPressed: () {
-                //forgot password screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ForgotPasswordPage()),
+                );
               },
               style: TextButton.styleFrom(
-                  foregroundColor: primaryColour.getPrimarySwatch()),
+                  foregroundColor: Colours().getTextButtonColor()),
               child: const Text(
                 'Forgot Password',
               ),
@@ -95,13 +117,22 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColour.getPrimarySwatch()),
+                      backgroundColor: Colours().getPrimarySwatch()),
                   child: const Text('Login'),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MyApp()),
-                    );
+                    if (userName.text.isNotEmpty && password.text.isNotEmpty) {
+                      // Call api to validate login and make isVisible true if needed
+                      // message = "Unrecognized username or password"
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                      );
+                    } else {
+                      setState(() {
+                        message = "Username or password is empty";
+                        isVisible = true;
+                      });
+                    }
                   },
                 )),
             Row(
@@ -134,7 +165,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     );
                   },
                   style: TextButton.styleFrom(
-                      foregroundColor: primaryColour.getPrimarySwatch()),
+                    foregroundColor: Colours().getTextButtonColor(),
+                  ),
                   child: const Text(
                     'Sign up',
                   ),
