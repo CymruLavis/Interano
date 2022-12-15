@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test/map_page.dart';
 import 'models/colourSwatch.dart';
 import 'package:test/login.dart';
 
@@ -34,6 +35,7 @@ class ValidationWidgets extends State<ValidationWidget> {
   TextEditingController validationInput = TextEditingController();
   String validationText = "";
   final primaryColour = Colours();
+  String code = "";
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,7 @@ class ValidationWidgets extends State<ValidationWidget> {
                   child: TextFormField(
                     onChanged: ((value) {
                       if (value.length == 1) {
+                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -83,6 +86,7 @@ class ValidationWidgets extends State<ValidationWidget> {
                   child: TextFormField(
                     onChanged: ((value) {
                       if (value.length == 1) {
+                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -107,6 +111,7 @@ class ValidationWidgets extends State<ValidationWidget> {
                   child: TextFormField(
                     onChanged: ((value) {
                       if (value.length == 1) {
+                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -131,6 +136,7 @@ class ValidationWidgets extends State<ValidationWidget> {
                   child: TextFormField(
                     onChanged: ((value) {
                       if (value.length == 1) {
+                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -155,6 +161,7 @@ class ValidationWidgets extends State<ValidationWidget> {
                   child: TextFormField(
                     onChanged: ((value) {
                       if (value.length == 1) {
+                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -179,6 +186,7 @@ class ValidationWidgets extends State<ValidationWidget> {
                   child: TextFormField(
                     onChanged: ((value) {
                       if (value.length == 1) {
+                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -228,8 +236,13 @@ class ValidationWidgets extends State<ValidationWidget> {
                       minimumSize: Size(0, 40)),
                   child: const Text('Ok'),
                   onPressed: () {
-                    //api to check code
-                    // check time with just datetime.now - 5 minutes
+                    if (code == '123456') //api code and 5 minutes
+                    {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                      );
+                    }
                   },
                 ),
               )
