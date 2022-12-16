@@ -36,6 +36,7 @@ class ValidationWidgets extends State<ValidationWidget> {
   String validationText = "";
   final primaryColour = Colours();
   String code = "";
+  String valCode = "";
 
   @override
   Widget build(BuildContext context) {
@@ -224,6 +225,7 @@ class ValidationWidgets extends State<ValidationWidget> {
                   child: const Text('Resend Code'),
                   onPressed: () {
                     //api to resend code and reset time sent
+                    //valCode = api for new code
                   },
                 ),
               ),

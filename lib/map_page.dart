@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:test/login.dart';
+import 'package:test/settings.dart';
 import 'filters.dart';
 import 'models/colourSwatch.dart';
 
@@ -48,11 +49,16 @@ class _MyAppState extends State<MyApp> {
                           builder: (context) => const FiltersPage()),
                     );
                   } else if (value == MenuItem.settings) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Settings()),
+                    );
                   } else if (value == MenuItem.logout) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const LoginPage()),
+                      // dump all variables
                     );
                   }
                 },

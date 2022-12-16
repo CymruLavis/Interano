@@ -57,6 +57,7 @@ class SignUpWidgets extends State<SignupWidget> {
   int flex2 = 6;
   String message = "Fill in all fields";
   String initialCountry = 'CAN';
+  String dropDown = "Male";
 
   @override
   Widget build(BuildContext context) {
@@ -183,24 +184,39 @@ class SignUpWidgets extends State<SignupWidget> {
               ]),
             ),
 
-            // Container(
-            //   padding: const EdgeInsets.all(5),
-            //   child: InternationalPhoneNumberInput(
-            //     inputBorder: OutlineInputBorder(),
-            //     onInputChanged: (PhoneNumber number) {},
-            //     onSaved: ((value) {
-            //       phoneNumberValidation(number.phoneNumber as int);
-            //     }),
-            //     // onInputValidated: (bool value) {
-            //     //   setState(() {
-            //     //     phoneNum = number.phoneNumber as TextEditingController;
-            //     //   });
-            //     // },
-            //     selectorConfig: SelectorConfig(
-            //       selectorType: PhoneInputSelectorType.DROPDOWN,
-            //     ),
-            //   ),
-            // ),
+            Row(
+              children: <Widget>[
+                Expanded(flex: 3, child: const Text('Category: ')),
+                Expanded(
+                  flex: 6,
+                  child: DropdownButtonHideUnderline(
+                      child: ButtonTheme(
+                    alignedDropdown: true,
+                    child: DropdownButton(
+                      value: dropDown,
+                      items: [
+                        DropdownMenuItem(child: Text("Male"), value: "Male"),
+                        DropdownMenuItem(
+                          child: Text("Female"),
+                          value: "Female",
+                        ),
+                        DropdownMenuItem(
+                          child: Text("Other"),
+                          value: "Other",
+                        )
+                      ],
+                      onChanged: (value) {
+                        if (value is String) {
+                          setState(() {
+                            dropDown = value;
+                          });
+                        }
+                      },
+                    ),
+                  )),
+                )
+              ],
+            ),
 
             Padding(
               padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -525,7 +541,6 @@ bool phoneNumberValidation(String num) {
   if (num.length == 10) {
     flag = true;
   }
-  print(num);
   return flag;
 }
 
