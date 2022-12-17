@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'map_page.dart';
 import 'models/colourSwatch.dart';
@@ -33,6 +35,7 @@ class SettingsWidget extends StatefulWidget {
 class SettingsWidgets extends State<SettingsWidget> {
   int flex1 = 5;
   int flex2 = 7;
+  int flexThirds = 2;
   bool notificationsSwitch = true;
   bool isVisible = false;
   final email = TextEditingController();
@@ -47,10 +50,9 @@ class SettingsWidgets extends State<SettingsWidget> {
     '23/12/2000',
     'elavis@cambriadesign.ca',
     '4168825129',
-    'chery potatoe',
+    'Female',
     false
   ];
-  String dropDown = 'Male';
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +102,6 @@ class SettingsWidgets extends State<SettingsWidget> {
                     initialValue: initialValues[3],
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      labelText: 'Email',
                     ),
                     onChanged: (value) {
                       if (emailValidation(email.text) == false) {
@@ -163,7 +164,8 @@ class SettingsWidgets extends State<SettingsWidget> {
                   child: ButtonTheme(
                     alignedDropdown: true,
                     child: DropdownButton(
-                      value: dropDown,
+                      isExpanded: true,
+                      value: initialValues[5],
                       items: [
                         DropdownMenuItem(child: Text("Male"), value: "Male"),
                         DropdownMenuItem(
@@ -178,7 +180,7 @@ class SettingsWidgets extends State<SettingsWidget> {
                       onChanged: (value) {
                         if (value is String) {
                           setState(() {
-                            dropDown = value;
+                            initialValues[5] = value;
                           });
                         }
                       },
@@ -216,7 +218,7 @@ class SettingsWidgets extends State<SettingsWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  flex: 3,
+                  flex: flexThirds,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colours().getPrimarySwatch(),
@@ -263,7 +265,7 @@ class SettingsWidgets extends State<SettingsWidget> {
                 ),
                 SizedBox(width: 10),
                 Expanded(
-                  flex: 3,
+                  flex: flexThirds,
                   child: ElevatedButton(
                     child: const Text("Save"),
                     style: ElevatedButton.styleFrom(
@@ -279,9 +281,10 @@ class SettingsWidgets extends State<SettingsWidget> {
                         gender,
                         notificationsSwitch
                       ];
-                      if (checkForChanges(initialValues, finalValues) ==
-                          true) {}
-
+                      //check for change
+                      //dialog box to notify about change about to happen
+                      //save new information
+                      //re validate the account/log out
                       Navigator.push(
                         //check to make sure items are properly filled out and if something has been changed
                         //update personal information in database
@@ -293,13 +296,14 @@ class SettingsWidgets extends State<SettingsWidget> {
                     },
                   ),
                 ),
+                SizedBox(width: 10),
                 Expanded(
-                  flex: 3,
+                  flex: flexThirds,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colours().getPrimarySwatch(),
                         minimumSize: Size(0, 40)),
-                    child: const Text('Report a problem'),
+                    child: const Text('Report Issue'),
                     onPressed: () {},
                   ),
                 ),
@@ -311,8 +315,13 @@ class SettingsWidgets extends State<SettingsWidget> {
 }
 
 bool checkForChanges(List initVals, List finVals) {
-  bool flag = false;
-
+  bool flag = true;
+  // check values in the lists to make sure they are the same
+  for (var i = 0; i < initVals.length; i++) {
+    if (initVals[i] != finVals[i]) {
+      flag = false;
+    }
+  }
   return flag;
 }
 
