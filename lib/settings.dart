@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:test/report_problem.dart';
 import 'map_page.dart';
 import 'models/colourSwatch.dart';
 import 'package:test/sign_up.dart';
@@ -206,7 +207,7 @@ class SettingsWidgets extends State<SettingsWidget> {
                         onChanged: (bool value) {
                           // This is called when the user toggles the switch.
                           setState(() {
-                            notificationsSwitch = value;
+                            initialValues[6] = value;
                           });
                         }))
               ],
@@ -229,8 +230,8 @@ class SettingsWidgets extends State<SettingsWidget> {
                         initialValues[0],
                         initialValues[1],
                         initialValues[2],
-                        email,
-                        phoneNum,
+                        email.text,
+                        phoneNum.text,
                         gender,
                         notificationsSwitch
                       ];
@@ -259,6 +260,12 @@ class SettingsWidgets extends State<SettingsWidget> {
                                         child: Text("No"))
                                   ],
                                 ));
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyApp()),
+                        );
                       }
                     },
                   ),
@@ -304,7 +311,13 @@ class SettingsWidgets extends State<SettingsWidget> {
                         backgroundColor: Colours().getPrimarySwatch(),
                         minimumSize: Size(0, 40)),
                     child: const Text('Report Issue'),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ReportProblem()),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -315,11 +328,11 @@ class SettingsWidgets extends State<SettingsWidget> {
 }
 
 bool checkForChanges(List initVals, List finVals) {
-  bool flag = true;
+  bool flag = false;
   // check values in the lists to make sure they are the same
   for (var i = 0; i < initVals.length; i++) {
     if (initVals[i] != finVals[i]) {
-      flag = false;
+      flag = true;
     }
   }
   return flag;
