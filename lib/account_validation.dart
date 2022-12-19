@@ -35,8 +35,16 @@ class ValidationWidgets extends State<ValidationWidget> {
   TextEditingController validationInput = TextEditingController();
   String validationText = "";
   final primaryColour = Colours();
+  final num1 = TextEditingController();
+  final num2 = TextEditingController();
+  final num3 = TextEditingController();
+  final num4 = TextEditingController();
+  final num5 = TextEditingController();
+  final num6 = TextEditingController();
   String code = "";
   String valCode = "";
+  String message = "";
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +68,9 @@ class ValidationWidgets extends State<ValidationWidget> {
                   height: 50,
                   width: 46,
                   child: TextFormField(
+                    controller: num1,
                     onChanged: ((value) {
                       if (value.length == 1) {
-                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -85,9 +93,9 @@ class ValidationWidgets extends State<ValidationWidget> {
                   height: 50,
                   width: 46,
                   child: TextFormField(
+                    controller: num2,
                     onChanged: ((value) {
                       if (value.length == 1) {
-                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -110,9 +118,9 @@ class ValidationWidgets extends State<ValidationWidget> {
                   height: 50,
                   width: 46,
                   child: TextFormField(
+                    controller: num3,
                     onChanged: ((value) {
                       if (value.length == 1) {
-                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -135,9 +143,9 @@ class ValidationWidgets extends State<ValidationWidget> {
                   height: 50,
                   width: 46,
                   child: TextFormField(
+                    controller: num4,
                     onChanged: ((value) {
                       if (value.length == 1) {
-                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -160,9 +168,9 @@ class ValidationWidgets extends State<ValidationWidget> {
                   height: 50,
                   width: 46,
                   child: TextFormField(
+                    controller: num5,
                     onChanged: ((value) {
                       if (value.length == 1) {
-                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -185,9 +193,9 @@ class ValidationWidgets extends State<ValidationWidget> {
                   height: 50,
                   width: 46,
                   child: TextFormField(
+                    controller: num6,
                     onChanged: ((value) {
                       if (value.length == 1) {
-                        code = code + value;
                         FocusScope.of(context).nextFocus();
                       }
                     }),
@@ -211,6 +219,24 @@ class ValidationWidgets extends State<ValidationWidget> {
           child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [Text("Code will expire in 5 minutes")])),
+      Padding(
+        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Visibility(
+              child: Text(
+                message,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    TextStyle(color: Colors.red, fontStyle: FontStyle.italic),
+              ),
+              visible: isVisible,
+            )
+          ],
+        ),
+      ),
       Padding(
           padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
           child: Row(
@@ -238,12 +264,23 @@ class ValidationWidgets extends State<ValidationWidget> {
                       minimumSize: Size(0, 40)),
                   child: const Text('Ok'),
                   onPressed: () {
-                    if (code == '123456') //api code and 5 minutes
+                    code = num1.text +
+                        num2.text +
+                        num3.text +
+                        num4.text +
+                        num5.text +
+                        num6.text;
+                    if (code == valCode) //api code and 5 minutes
                     {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const MyApp()),
                       );
+                    } else {
+                      setState(() {
+                        message = "Incorrect code";
+                        isVisible = true;
+                      });
                     }
                   },
                 ),

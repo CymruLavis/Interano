@@ -1,6 +1,9 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:test/changeEmail.dart';
+import 'package:test/changeGender.dart';
+import 'package:test/changePhoneNumber.dart';
 import 'package:test/report_problem.dart';
 import 'map_page.dart';
 import 'models/colourSwatch.dart';
@@ -35,28 +38,30 @@ class SettingsWidget extends StatefulWidget {
 
 class SettingsWidgets extends State<SettingsWidget> {
   int flex1 = 5;
-  int flex2 = 7;
+  int flexText = 8;
+  int flexButton = 6;
   int flexThirds = 2;
   bool notificationsSwitch = true;
   bool isVisible = false;
-  final email = TextEditingController();
+  var email = TextEditingController();
   var phoneNum = TextEditingController();
-  String gender = "";
+  var gender = TextEditingController();
   String message = "";
 
   // change this into an api call to fill the list with the personal information
   List initialValues = [
-    'elavis',
-    'Ethan Lavis',
-    '23/12/2000',
-    'elavis@cambriadesign.ca',
-    '4168825129',
-    'Female',
-    false
+    'myUsername',
+    'first and last name',
+    'DOB',
+    'myEmail',
+    'myNumber',
+    'Male',
+    true
   ];
-
   @override
   Widget build(BuildContext context) {
+    //List initial values = initialValuesAPI();
+    List finalValues = initialValues;
     return Padding(
         padding: EdgeInsets.all(10),
         child: ListView(children: <Widget>[
@@ -66,7 +71,7 @@ class SettingsWidgets extends State<SettingsWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(flex: flex1, child: const Text("Username:")),
-                Expanded(flex: flex2, child: Text(initialValues[0]))
+                Expanded(flex: flexText, child: Text(initialValues[0]))
               ],
             ),
           ),
@@ -76,7 +81,7 @@ class SettingsWidgets extends State<SettingsWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(flex: flex1, child: const Text("Name: ")),
-                Expanded(flex: flex2, child: Text(initialValues[1]))
+                Expanded(flex: flexText, child: Text(initialValues[1]))
               ],
             ),
           ),
@@ -86,7 +91,7 @@ class SettingsWidgets extends State<SettingsWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(flex: flex1, child: const Text("Date of Birth: ")),
-                Expanded(flex: flex2, child: Text(initialValues[2]))
+                Expanded(flex: flexText, child: Text(initialValues[2]))
               ],
             ),
           ),
@@ -95,28 +100,41 @@ class SettingsWidgets extends State<SettingsWidget> {
             child: Row(children: <Widget>[
               Expanded(
                 flex: flex1,
+                child: const Text('Gender'),
+              ),
+              Expanded(flex: flexButton, child: Text(initialValues[5])),
+              IconButton(
+                icon: const Icon(Icons.arrow_right),
+                tooltip: 'Change Gender',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChangeGender()),
+                  );
+                },
+              ),
+            ]),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Row(children: <Widget>[
+              Expanded(
+                flex: flex1,
                 child: const Text('Email'),
               ),
-              Expanded(
-                  flex: flex2,
-                  child: TextFormField(
-                    initialValue: initialValues[3],
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      if (emailValidation(email.text) == false) {
-                        setState(() {
-                          message = "Invalid email";
-                          isVisible = true;
-                        });
-                      } else {
-                        setState(() {
-                          isVisible = false;
-                        });
-                      }
-                    },
-                  ))
+              Expanded(flex: flexButton, child: Text(initialValues[3])),
+              IconButton(
+                icon: const Icon(Icons.arrow_right),
+                tooltip: 'Change email',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChangeEmail()),
+                  );
+                },
+              ),
             ]),
           ),
           Padding(
@@ -126,70 +144,19 @@ class SettingsWidgets extends State<SettingsWidget> {
                 flex: flex1,
                 child: const Text('Phone Number'),
               ),
-              Expanded(
-                  flex: flex2,
-                  child: TextFormField(
-                    // controller: phoneNum,
-                    initialValue: initialValues[4],
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      if (double.tryParse(phoneNum.text) == null) {
-                        setState(() {
-                          message = "Invalid phone number";
-                          isVisible = true;
-                        });
-                      } else {
-                        if (phoneNumberValidation(phoneNum.text) == false) {
-                          setState(() {
-                            message = "Invalid phone number length";
-                            isVisible = true;
-                          });
-                        } else {
-                          setState(() {
-                            isVisible = false;
-                          });
-                        }
-                      }
-                    },
-                  ))
+              Expanded(flex: flexButton, child: Text(initialValues[4])),
+              IconButton(
+                icon: const Icon(Icons.arrow_right),
+                tooltip: 'Change Phone Number',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChangePhoneNumber()),
+                  );
+                },
+              ),
             ]),
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(flex: flex1, child: const Text('Gender: ')),
-              Expanded(
-                  flex: flex2,
-                  // child: DropdownButtonHideUnderline(
-                  child: ButtonTheme(
-                    alignedDropdown: true,
-                    child: DropdownButton(
-                      isExpanded: true,
-                      value: initialValues[5],
-                      items: [
-                        DropdownMenuItem(child: Text("Male"), value: "Male"),
-                        DropdownMenuItem(
-                          child: Text("Female"),
-                          value: "Female",
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Other"),
-                          value: "Other",
-                        )
-                      ],
-                      onChanged: (value) {
-                        if (value is String) {
-                          setState(() {
-                            initialValues[5] = value;
-                          });
-                        }
-                      },
-                    ),
-                  )
-                  // ),
-                  )
-            ],
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -197,9 +164,9 @@ class SettingsWidgets extends State<SettingsWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                    flex: flex1, child: const Text("Recieve Notifications")),
+                    flex: flex1, child: const Text("Receive Notifications")),
                 Expanded(
-                    flex: flex2,
+                    flex: flexText,
                     child: Switch(
                         // This bool value toggles the switch
                         value: initialValues[6],
@@ -218,85 +185,33 @@ class SettingsWidgets extends State<SettingsWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Visibility(
+                  child: Text(
+                    message,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.red, fontStyle: FontStyle.italic),
+                  ),
+                  visible: isVisible,
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
                 Expanded(
-                  flex: flexThirds,
+                  flex: flex1,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colours().getPrimarySwatch(),
                         minimumSize: Size(0, 40)),
                     child: const Text('Back'),
                     onPressed: () {
-                      List finalValues = [
-                        initialValues[0],
-                        initialValues[1],
-                        initialValues[2],
-                        email.text,
-                        phoneNum.text,
-                        gender,
-                        notificationsSwitch
-                      ];
-                      if (checkForChanges(initialValues, finalValues) == true) {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text("You have unsaved changes"),
-                                  content: Text(
-                                      "Do you want to save these changes? "),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Yes")),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const MyApp()),
-                                          );
-                                        },
-                                        child: Text("No"))
-                                  ],
-                                ));
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MyApp()),
-                        );
-                      }
-                    },
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  flex: flexThirds,
-                  child: ElevatedButton(
-                    child: const Text("Save"),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colours().getPrimarySwatch(),
-                        minimumSize: Size(0, 40)),
-                    onPressed: () {
-                      List finalValues = [
-                        initialValues[0],
-                        initialValues[1],
-                        initialValues[2],
-                        email,
-                        phoneNum,
-                        gender,
-                        notificationsSwitch
-                      ];
-                      //check for change
-                      //dialog box to notify about change about to happen
-                      //save new information
-                      //re validate the account/log out
                       Navigator.push(
-                        //check to make sure items are properly filled out and if something has been changed
-                        //update personal information in database
-                        //send an email to communications
-
                         context,
                         MaterialPageRoute(builder: (context) => const MyApp()),
                       );
@@ -305,7 +220,7 @@ class SettingsWidgets extends State<SettingsWidget> {
                 ),
                 SizedBox(width: 10),
                 Expanded(
-                  flex: flexThirds,
+                  flex: flex1,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colours().getPrimarySwatch(),
@@ -326,19 +241,6 @@ class SettingsWidgets extends State<SettingsWidget> {
         ]));
   }
 }
-
-bool checkForChanges(List initVals, List finVals) {
-  bool flag = false;
-  // check values in the lists to make sure they are the same
-  for (var i = 0; i < initVals.length; i++) {
-    if (initVals[i] != finVals[i]) {
-      flag = true;
-    }
-  }
-  return flag;
-}
-
-void saveChangesAPI() {}
 
 List initialValuesAPI() {
   return [];
